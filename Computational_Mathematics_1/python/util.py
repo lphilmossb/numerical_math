@@ -7,7 +7,7 @@ Provide commonly used utility functions for multiple areas
 """
 
 from typing import Tuple
-from numpy import ndarray, pad
+from numpy import ndarray, pad, eye
 
 def adapt_coefficients(array1: ndarray, array2: ndarray) -> Tuple[ndarray, ndarray]:
     """
@@ -98,3 +98,9 @@ def polystring(coeffs: ndarray) -> str:
                 else:
                     rval += f'{sign} {val}x^{i} '
     return rval
+
+def get_axis_I(axis : ndarray) -> ndarray:
+    i_matrix = 1.0
+    if axis.ndim > 2:
+        i_matrix = eye(axis.shape[0], axis.shape[1])
+    return i_matrix

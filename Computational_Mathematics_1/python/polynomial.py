@@ -1,6 +1,6 @@
 """
 author             : Moritz Mossböck
-file               : Polynomial.py
+file               : polynomial.py
 development-version: python 3.10.9 (64-bit)
 
 
@@ -12,7 +12,7 @@ from __future__ import annotations # allow type hints for class in class-methods
 from typing import Iterator
 from numpy import ndarray, array, float64
 from numpy import trim_zeros, flip, full_like, zeros, any as npany, eye, allclose
-from util import polystring, adapt_coefficients
+from util import polystring, adapt_coefficients, get_axis_I
 
 
 class Polynomial:
@@ -91,8 +91,11 @@ class Polynomial:
             raise ValueError('passed x-values is/contains None')
 
         xk = full_like(axis, self._coeffs[-1])
+        i_matrix = get_axis_I(axis)
+
+
         for c in flip(self._coeffs[:-1]):
-            xk = axis * xk + c * eye(axis.shape[0])
+            xk = axis * xk + c * i_matrix
         return xk
 
     def __str__(self) -> str:
