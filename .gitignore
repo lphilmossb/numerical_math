@@ -1,3 +1,6 @@
 **/*.report.txt
 **/*.cpython*.pyc
-C++/
+**/*.csv
+*.tex
+*-figure*.pdf
+*.png
