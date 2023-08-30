@@ -3,5 +3,4 @@
 **/*.csv
 *.tex
 *-figure*.pdf
-*.png
 **/C++/
