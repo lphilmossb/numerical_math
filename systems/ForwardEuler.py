@@ -69,4 +69,4 @@ class ForwardEulernD:
             t[k] = self._tk
             self.step()
         
-        return y, t
+        return y.T, t
