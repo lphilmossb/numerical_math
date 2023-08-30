@@ -31,7 +31,6 @@ SCHEMA = {
 }
 
 def mpl_setscheme(scheme = 'show'):
-
     for key, val in SCHEMA[scheme].items():
         rcParams[key] = val
 
