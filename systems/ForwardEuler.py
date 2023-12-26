@@ -1,30 +1,30 @@
 from typing import Callable, Optional, Tuple
-from numpy import copy, zeros, ndarray
+from numpy import copy, zeros, ndarray, ceil
 
 class ForwardEuler1D:
 
     def __init__(self, dy : Callable[[float, float], float],
                        y0 : Optional[float] = 0.0,
                        t0 : Optional[float] = 0.0,
+                       t1 : Optional[float] = 1.0,
                        h : Optional[float] = 0.1) -> None:
         self._dy = dy
+
         self._y0 = y0
         self._yk = y0
+
         self._t0 = t0
         self._tk = t0
+        self._t1 = t1
         self._h = h
 
     def step(self) -> float:
         self._yk += self._h * self._dy(self._yk, self._tk)
         self._tk += self._h
         return self._yk
-
-    def reset(self) -> None:
-        self._yk = self._y0
-        self._tk = self._t0
     
-    def run(self, N : Optional[int] = 100) -> Tuple[ndarray, ndarray]:
-        self.reset()
+    def run(self) -> Tuple[ndarray, ndarray]:
+        N = int(ceil((self._t1 - self._t0) / self._h))
         y = zeros(N, dtype = float)
         t = zeros(N, dtype = float)
 
