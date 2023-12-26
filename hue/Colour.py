@@ -8,7 +8,7 @@
 """
 from typing import Tuple, Optional, Iterable
 from util import to_uint8, base_convert
-from numpy import ndarray, array
+from numpy import ndarray, array, sqrt
 import constants
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -117,3 +117,11 @@ class Colour:
             Returns an array containting the red, green and blue values
         """
         return array([self._red, self._green, self._blue])
+
+
+    def average(self, col2):
+        red   = sqrt((self._red**2 + col2._red**2) * 0.5)
+        green = sqrt((self._green**2 + col2._green**2) * 0.5)
+        blue  = sqrt((self._blue**2 + col2._blue**2) * 0.5)
+        return Colour(red, green, blue)
+

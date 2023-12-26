@@ -7,7 +7,8 @@
         Provides various "interatpolation" or "sampling" methods to generate gradients.
 """
 from typing import Optional
-from numpy import linspace, zeros, array, ndarray, cos, pi
+from numpy import linspace, zeros, array, ndarray, cos, pi, floor, concatenate
+from numpy.random import uniform, normal
 from Colour import Colour
 
 import constants
@@ -57,3 +58,21 @@ def chebyshev(start : Colour, end : Colour, steps : Optional[int] = constants.ST
     blue  = chebyshev_nodes(b0, b1, steps)
 
     return colour_array(red, green, blue, steps)
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+# offset
+#-----------------------------------------------------------------------------------------------------------------------
+def offset_gradient(start : Colour, end : Colour, steps : Optional[int] = constants.STEPS,
+                    offset : Optional[float] = 0.25) -> ndarray:
+    
+    center_col = start.average(end)
+    center_index = int(floor(steps * offset))
+    
+    part1 = linear(start, center_col, center_index)
+    part2 = linear(center_col, end, steps - center_index + 1)[1:]
+    return concatenate((part1, part2))
+
+
+def offset_left(start : Colour, end : Colour, steps : Optional[int] = constants.STEPS):
+    return offset_gradient(start, end, steps, 0.25)
