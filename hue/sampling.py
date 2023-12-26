@@ -7,8 +7,7 @@
         Provides various "interatpolation" or "sampling" methods to generate gradients.
 """
 from typing import Optional
-from numpy import linspace, zeros, array, ndarray, cos, pi, floor, concatenate
-from numpy.random import uniform, normal
+from numpy import linspace, zeros, array, ndarray, cos, pi, floor, concatenate, zeros_like
 from Colour import Colour
 
 import constants
@@ -17,6 +16,25 @@ import colours
 # helper functions
 #-----------------------------------------------------------------------------------------------------------------------
 def colour_array(red : ndarray, green : ndarray, blue : ndarray, steps : Optional[int] = constants.STEPS) -> ndarray:
+    """
+        Constructs an array of `Colour` instance from the passed rgb-channels.
+
+        Parameters:
+        -----------
+        red : ndarray
+            integer array for red channel
+        green : ndarray
+            integer array for green channel
+        blue : ndarray
+            integera array for blue channel
+        steps : int, optional
+            number of gradient steps
+
+        Returns:
+        --------
+        ndarray
+            array containing `Colour` instances
+    """
     cols = [colours.BLACK] * steps
 
     for i, (r, g, b) in enumerate(zip(red, green, blue)):
@@ -29,6 +47,18 @@ def colour_array(red : ndarray, green : ndarray, blue : ndarray, steps : Optiona
 # linear
 #-----------------------------------------------------------------------------------------------------------------------
 def linear(start : Colour, end : Colour, steps : Optional[int] = constants.STEPS) -> ndarray:
+    """
+        Create a linear gradient between `start` and `end` in `steps` steps. 
+
+        Parameters:
+        -----------
+        start : Colour
+            starting colour
+        end : Colour
+            ending colour
+        steps : int, optional
+            number of steps in the gradient
+    """
     r0, g0, b0 = start
     r1, g1, b1 = end
 
@@ -42,6 +72,9 @@ def linear(start : Colour, end : Colour, steps : Optional[int] = constants.STEPS
 # chebyshev
 #-----------------------------------------------------------------------------------------------------------------------
 def chebyshev_nodes(start : int, end : int, steps : Optional[int] = constants.STEPS) -> ndarray:
+    """
+        Computes the chebyshev nodes between `start` and `end`, where n = `steps`.
+    """
     values = zeros(steps, dtype=int)
 
     for k in range(steps):
@@ -50,6 +83,9 @@ def chebyshev_nodes(start : int, end : int, steps : Optional[int] = constants.ST
     return values
 
 def chebyshev(start : Colour, end : Colour, steps : Optional[int] = constants.STEPS) -> ndarray:
+    """
+        Do not confuse this with chebyshev interpolation. This has no meaning in an interpolation sense.
+    """
     r0, g0, b0 = start
     r1, g1, b1 = end
 

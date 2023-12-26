@@ -7,7 +7,6 @@
         Provides some basic utility functions used in the (extended) color-grid generator.
         See the individual functions for a more detailed explanation.
 """
-# imports
 from typing import Optional, Tuple
 
 #-----------------------------------------------------------------------------------------------------------------------

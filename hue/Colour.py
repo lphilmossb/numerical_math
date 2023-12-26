@@ -4,7 +4,7 @@
     date  : 26.12.23
 
     description:
-        Provides the `Colour` classe used for the hue generating project.
+        Provides the `Colour` class used for the hue generating project.
 """
 from typing import Tuple, Optional, Iterable
 from util import to_uint8, base_convert
@@ -17,7 +17,7 @@ import constants
 def extract_rgb(value : int) -> Tuple[int, int, int]:
     """
         Assumes an integer representing the value of an RGB-hex code (e.g. '0xF5A9B8') and extracts the red, 
-        green and blue components.
+        green and blue intensities.
 
         Parameters:
         -----------
@@ -39,16 +39,16 @@ def extract_rgb(value : int) -> Tuple[int, int, int]:
 #-----------------------------------------------------------------------------------------------------------------------
 class Colour:
     """
-        Basically a fancy array with some shortcutes specific fot RGB-colours.
+        Basically a fancy array with some shortcuts specific to RGB-colours.
 
         Attributes:
         -----------
         _red : int
-            red channel
+            red intensity
         _green : int
-            green channel
+            green intensity
         _blue : int
-            blue channel
+            blue intensity
     """
     def __init__(self, red : Optional[int] = 0, green : Optional[int] = 0, blue : Optional[int] = 0) -> None:
         self._red   = to_uint8(red)
@@ -87,7 +87,7 @@ class Colour:
             Colour
                 the colour with the specified red, green and blue values
         """
-        return Colour.fromhex(base_convert(string))
+        return Colour.fromhex(base_convert(string, base))
 
     def __str__(self) -> str:
         """
@@ -101,7 +101,7 @@ class Colour:
 
             Returns:
             --------
-            Iterable[ing]:
+            Iterable[int]:
                 iterable of the tuple containing the red, green and blue values
         """
         return iter((self._red, self._green, self._blue))
@@ -120,6 +120,19 @@ class Colour:
 
 
     def average(self, col2):
+        """
+            Computes the true average of two colours given in RGB format.
+
+            Parameters:
+            -----------
+            col2 : Colour
+                colour to average with
+            
+            Returns:
+            --------
+            Colour
+                average colour of `self` and `col2`
+        """
         red   = sqrt((self._red**2 + col2._red**2) * 0.5)
         green = sqrt((self._green**2 + col2._green**2) * 0.5)
         blue  = sqrt((self._blue**2 + col2._blue**2) * 0.5)
